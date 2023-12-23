@@ -32,6 +32,7 @@ export default function createInteractions(map) {
     map.addControl(newPolygonButton.control);
     newPolygonLayer.setSource(undefined);
     map.removeOverlay(newPolygonDialog.overlay);
+    map.removeLayer(newPolygonLayer);
   };
 
   newPolygonDrawInteraction.on("drawend", (event) => {
@@ -56,10 +57,11 @@ export default function createInteractions(map) {
       map.addControl(newPolygonButton.control);
       newPolygonLayer.setSource(undefined);
       map.removeOverlay(newPolygonDialog.overlay);
+      map.removeLayer(newPolygonLayer);
 
       map.getLayers().forEach((layer) => {
-        console.log(layer);
         if (layer.get("name") === "polygonLayer") {
+          event.feature.set("name", name);
           layer.getSource().addFeature(event.feature);
         }
       });
