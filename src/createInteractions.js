@@ -1,9 +1,9 @@
 import Draw from "ol/interaction/Draw";
-import Button from "./button";
+import Button from "./Button";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { getCenter } from "ol/extent";
-import createNewPolygonDialog from "./createNewPolygonDialog";
+import NewPolygonDialog from "./NewPolygonDialog";
 
 export default function createInteractions(map) {
   const newPolygonDrawInteraction = new Draw({
@@ -15,7 +15,7 @@ export default function createInteractions(map) {
 
   const newPolygonButton = new Button("✍️");
   const cancelNewPolygonButton = new Button("❌");
-  const newPolygonDialog = createNewPolygonDialog();
+  const newPolygonDialog = new NewPolygonDialog();
 
   map.addInteraction(newPolygonDrawInteraction);
   map.addControl(newPolygonButton.control);
@@ -31,7 +31,7 @@ export default function createInteractions(map) {
     map.removeControl(cancelNewPolygonButton.control);
     map.addControl(newPolygonButton.control);
     newPolygonLayer.setSource(undefined);
-    map.removeOverlay(newPolygonDialogOverlay);
+    map.removeOverlay(newPolygonDialog.overlay);
   };
 
   newPolygonDrawInteraction.on("drawend", (event) => {
@@ -44,10 +44,25 @@ export default function createInteractions(map) {
     );
 
     map.addLayer(newPolygonLayer);
-    map.addOverlay(newPolygonDialog);
+    map.addOverlay(newPolygonDialog.overlay);
 
     const newPolygonExtent = event.feature.getGeometry().getExtent();
 
-    newPolygonDialog.setPosition(getCenter(newPolygonExtent));
+    newPolygonDialog.overlay.setPosition(getCenter(newPolygonExtent));
+
+    newPolygonDialog.click = (name) => {
+      newPolygonDrawInteraction.setActive(false);
+      map.removeControl(cancelNewPolygonButton.control);
+      map.addControl(newPolygonButton.control);
+      newPolygonLayer.setSource(undefined);
+      map.removeOverlay(newPolygonDialog.overlay);
+
+      map.getLayers().forEach((layer) => {
+        console.log(layer);
+        if (layer.get("name") === "polygonLayer") {
+          layer.getSource().addFeature(event.feature);
+        }
+      });
+    };
   });
 }
