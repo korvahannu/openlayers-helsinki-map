@@ -1,0 +1,15 @@
+@import "@fontsource/inter";
+
+:root {
+  --darkest: #33186b;
+  --darker: #7360df;
+  --dark: #c499f3;
+  --light: #f2afef;
+
+  font-family: "Inter";
+}
+
+body {
+  background-color: var(--darkest);
+  padding-top: 2rem;
+}

@@ -1,0 +1,51 @@
+@import "../../node_modules/ol/ol.css";
+
+.map-container {
+  margin: auto;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 32px;
+  border: 5px solid var(--darker);
+  overflow: hidden;
+}
+
+.ol-zoom {
+  top: 1rem;
+  left: 1rem;
+}
+
+.ol-zoom .ol-zoom-in,
+.ol-zoom .ol-zoom-out {
+  background-color: var(--darker);
+  border: 2px solid var(--darkest);
+  color: var(--light);
+  font-size: 1.25rem;
+  border-radius: 8px;
+  width: 3rem;
+  height: 2rem;
+}
+
+.new-polygon-button {
+  bottom: 1rem;
+  left: 1rem;
+  border: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--darker);
+  border: 2px solid var(--darkest);
+  font-size: 1.25rem;
+}
+
+.new-polygon-dialog-container {
+  width: 300px;
+  background-color: var(--light);
+  border-radius: 16px;
+  border: 2px solid var(--dark);
+}
+
+.new-polygon-dialog-container form {
+  display: flex;
+  flex-direction: column;
+  justify-items: space-evenly;
+  gap: 16px;
+  padding: 1rem;
+}

@@ -28,6 +28,7 @@
     "webpack-plugin-serve": "^1.6.0"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.0.16",
     "ol": "^8.2.0",
     "proj4": "^2.9.2"
   }
