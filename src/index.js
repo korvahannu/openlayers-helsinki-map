@@ -11,6 +11,6 @@ registerProjectionEPSG2393();
 
 const view = createView();
 const layers = createLayers();
-const map = createMap(view, layers);
+const map = createMap(view, layers.layersArray);
 
-createInteractions(map);
+createInteractions(map, layers);

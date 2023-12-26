@@ -2,31 +2,38 @@ import Overlay from "ol/Overlay";
 
 export default class NewPolygonDialog {
   constructor() {
-    const newPolygonDialogContainer = document.createElement("div");
-    newPolygonDialogContainer.classList.add("new-polygon-dialog-container");
+    this.newPolygonDialogContainer = document.createElement("div");
+    this.newPolygonDialogContainer.classList.add(
+      "new-polygon-dialog-container"
+    );
 
-    const newPolygonDialogForm = document.createElement("form");
-    const newPolygonDialogNameInput = document.createElement("input");
-    const newPolygonDialogAddButton = document.createElement("button");
-    newPolygonDialogAddButton.innerText = "Add";
-    newPolygonDialogNameInput.placeholder = "Name";
+    this.newPolygonDialogForm = document.createElement("form");
+    this.newPolygonDialogNameInput = document.createElement("input");
+    this.newPolygonDialogAddButton = document.createElement("button");
+    this.newPolygonDialogAddButton.innerText = "Add";
+    this.newPolygonDialogNameInput.placeholder = "Name";
 
-    newPolygonDialogForm.appendChild(newPolygonDialogNameInput);
-    newPolygonDialogForm.appendChild(newPolygonDialogAddButton);
-    newPolygonDialogContainer.appendChild(newPolygonDialogForm);
+    this.newPolygonDialogForm.appendChild(this.newPolygonDialogNameInput);
+    this.newPolygonDialogForm.appendChild(this.newPolygonDialogAddButton);
+    this.newPolygonDialogContainer.appendChild(this.newPolygonDialogForm);
 
-    document.body.appendChild(newPolygonDialogContainer);
+    document.body.appendChild(this.newPolygonDialogContainer);
 
     this.click = (event) => {};
 
-    newPolygonDialogForm.addEventListener("submit", (event) => {
+    this.newPolygonDialogForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.click(newPolygonDialogNameInput.value);
+      this.click(this.newPolygonDialogNameInput.value);
+      this.newPolygonDialogNameInput.value = null;
     });
 
     this.overlay = new Overlay({
-      element: newPolygonDialogContainer,
+      element: this.newPolygonDialogContainer,
       positioning: "center-center",
     });
+  }
+
+  focus() {
+    this.newPolygonDialogNameInput.focus();
   }
 }

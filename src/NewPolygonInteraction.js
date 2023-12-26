@@ -6,7 +6,7 @@ import { getCenter } from "ol/extent";
 import NewPolygonDialog from "./NewPolygonDialog";
 
 export default class NewPolygonInteraction {
-  constructor(map) {
+  constructor(map, layers) {
     this.drawInteraction = new Draw({
       type: "Polygon",
     });
@@ -28,6 +28,8 @@ export default class NewPolygonInteraction {
       this.disableDrawNewPolygonTool();
 
     this.drawInteraction.on("drawend", this.handleDrawEnd);
+
+    this.layers = layers;
   }
 
   enableDrawNewPolygonTool() {
@@ -63,6 +65,7 @@ export default class NewPolygonInteraction {
 
     this.newPolygonDialog.overlay.setPosition(getCenter(newPolygonExtent));
     this.newPolygonDialog.click = this.handleNewPolygonDialogClick;
+    this.newPolygonDialog.focus();
   };
 
   handleNewPolygonDialogClick = (name) => {
@@ -72,12 +75,9 @@ export default class NewPolygonInteraction {
     this.newPolygonLayer.setSource(undefined);
     this.map.removeOverlay(this.newPolygonDialog.overlay);
     this.map.removeLayer(this.newPolygonLayer);
-
-    this.map.getLayers().forEach((layer) => {
-      if (layer.get("name") === "polygonLayer") {
-        this.currentFeature.set("name", name);
-        layer.getSource().addFeature(this.currentFeature);
-      }
-    });
+    this.currentFeature.set("name", name);
+    this.layers.layersObject.polygonLayer
+      .getSource()
+      .addFeature(this.currentFeature);
   };
 }
